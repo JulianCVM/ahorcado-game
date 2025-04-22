@@ -1,52 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahorcado</title>
+    <title>Juego del Ahorcado</title>
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="main.js" defer></script>
+    <script src="main.js" defer></script>
 </head>
 <body>
-    <div>
+    <div class="container">
         <h1>Ahorcado</h1>
         <p>Adivina la palabra o muere jejejeje 🗿</p>
-        <div class="informacion-juego">
-            <p>Palabra: <span id="palabra"></span></p>
-            <p>Intentos: <span id="acerto">0</span> - Aciertos  <span id="error">0 </span>- Fallos</p>
+        
+        <div class="game-container">
+            <div class="muñeco-container">
+                <div class="muñeco" id="muñeco">
+                    <!-- Las partes del muñeco se generarán dinámicamente con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="game-info">
+                <div class="informacion-juego">
+                    <p>Palabra:</p>
+                    <div id="palabra"></div>
+                    <p>
+                        <span class="contador" id="acerto">0</span> - Aciertos 
+                        <span class="contador" id="error">0</span> - Fallos
+                    </p>
+                </div>
+                
+                <div class="teclado" id="teclado">
+                    <button id="65">A</button>
+                    <button id="66">B</button>
+                    <button id="67">C</button>
+                    <button id="68">D</button>
+                    <button id="69">E</button>
+                    <button id="70">F</button>
+                    <button id="71">G</button>
+                    <button id="72">H</button>
+                    <button id="73">I</button>
+                    <button id="74">J</button>
+                    <button id="75">K</button>
+                    <button id="76">L</button>
+                    <button id="77">M</button>
+                    <button id="78">N</button>
+                    <button id="79">O</button>
+                    <button id="80">P</button>
+                    <button id="81">Q</button>
+                    <button id="82">R</button>
+                    <button id="83">S</button>
+                    <button id="84">T</button>
+                    <button id="85">U</button>
+                    <button id="86">V</button>
+                    <button id="87">W</button>
+                    <button id="88">X</button>
+                    <button id="89">Y</button>
+                    <button id="90">Z</button>
+                </div>
+                
+                <button id="btnReiniciar">Reiniciar Juego</button>
+            </div>
         </div>
-        <div class="teclado" id="teclado">
-            <button id="65">A</button>
-            <button id="66">B</button>
-            <button id="67">C</button>
-            <button id="68">D</button>
-            <button id="69">E</button>
-            <button id="70">F</button>
-            <button id="71">G</button>
-            <button id="72">H</button>
-            <button id="73">I</button>
-            <button id="74">J</button>
-            <button id="75">K</button>
-            <button id="76">L</button>
-            <button id="77">M</button>
-            <button id="78">N</button>
-            <button id="79">O</button>
-            <button id="80">P</button>
-            <button id="81">Q</button>
-            <button id="82">R</button>
-            <button id="83">S</button>
-            <button id="84">T</button>
-            <button id="85">U</button>
-            <button id="86">V</button>
-            <button id="87">W</button>
-            <button id="88">X</button>
-            <button id="89">Y</button>
-            <button id="90">Z</button>
-        </div>
-    </div>
-    <button id="btnReiniciar">Reiniciar</button>
-    <div class="muñeco" id="muñeco">
-
     </div>
 </body>
 </html>
