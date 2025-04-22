@@ -14,6 +14,8 @@ let teclado = document.getElementById('teclado');
 let btnReiniciar = document.getElementById('btnReiniciar');
 let muñeco = document.getElementById('muñeco');
 
+let juegoTerminado = false;
+
 //funcion para generar la palabra aleatoria
 document.addEventListener('DOMContentLoaded', (event) => {
 
@@ -27,6 +29,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
         palabra.innerHTML += `<span id="letra-${i}">_ </span>`;
     }
     palabra.innerHTML = palabra.innerHTML.trim();
+
+
+    const horca = document.createElement(`div`);
+    horca.classList.add(`horca`);
+    
+    const soga = document.createElement(`span`);
+    soga.classList.add(`soga`);
+
+
+    horca.appendChild(soga);
+    muñeco.appendChild(horca);
+
 });
 
 
@@ -44,7 +58,7 @@ document.addEventListener('keydown', (event) => {
 
     // console.log(letrasPresionadas);
 
-    if(letrasPresionadas.includes(letra) || !abecedario.includes(letra)){
+    if(letrasPresionadas.includes(letra) || !abecedario.includes(letra) || juegoTerminado){
         console.log('La letra ya fue presionada');
     }else{
         console.log('La letra no fue presionada');
@@ -72,6 +86,13 @@ document.addEventListener('keydown', (event) => {
         }else{
             console.log('La letra no existe en la palabra');
             error.innerHTML = parseInt(error.innerHTML) + 1;
+
+            dibujarParteMuneco(parseInt(error.innerHTML));
+            if(parseInt(error.innerHTML) >= 6){
+                alert('¡Has perdido! La palabra era: ' + palabraAleatoria);
+                juegoTerminado = true;
+            }
+
         }
     }
 
@@ -100,3 +121,38 @@ function encontrarPosicionLetra(letra) {
     }
     return posiciones;
 }
+
+
+function dibujarParteMuneco(numError){
+    const parte = document.createElement(`div`);
+
+    switch(numError){
+        case 1:
+            parte.classList.add(`cabeza`);
+            break;
+        case 2:
+            parte.classList.add(`cuerpo`);
+            break;
+        case 3:
+            parte.classList.add(`brazo-izq`);
+            break;
+        case 4:
+            parte.classList.add(`brazo-der`);
+            break;
+        case 5:
+            parte.classList.add(`pierna-izq`);
+            break;
+        case 6:
+            parte.classList.add(`pierna-der`);
+            break;
+    }
+
+    muñeco.appendChild(parte);
+}
+
+
+
+btnReiniciar.addEventListener('click', () => {
+    location.reload();
+});
+
