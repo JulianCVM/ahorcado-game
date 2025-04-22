@@ -16,6 +16,16 @@ let muñeco = document.getElementById('muñeco');
 
 let juegoTerminado = false;
 
+let juegoGanado = false;
+
+
+let tecladoVirtual = document.getElementById('teclado');
+let botonesTeclado = [];
+for(let i = 65; i <= 90; i++) {
+    botonesTeclado.push(document.getElementById(i.toString()));
+}
+
+
 //funcion para generar la palabra aleatoria
 document.addEventListener('DOMContentLoaded', (event) => {
 
@@ -65,6 +75,16 @@ document.addEventListener('keydown', (event) => {
         letrasPresionadas.push(letra);
 
 
+
+
+        let teclaASCII = recibirTeclaASCII(event);
+        console.log(teclaASCII);
+        deshabilitarTeclado(teclaASCII);
+
+
+
+
+
         if(palabraOculta.includes(letra)){
             console.log('La letra existe en la palabra');
             acerto.innerHTML = parseInt(acerto.innerHTML) + 1;
@@ -83,6 +103,12 @@ document.addEventListener('keydown', (event) => {
             
             console.log(palabraOculta);
 
+            if(palabraOculta.length === 0){
+                juegoGanado = true;
+                alert('¡Has ganado! La palabra era: ' + palabraAleatoria);
+                juegoTerminado = true;
+            }
+
         }else{
             console.log('La letra no existe en la palabra');
             error.innerHTML = parseInt(error.innerHTML) + 1;
@@ -96,6 +122,41 @@ document.addEventListener('keydown', (event) => {
         }
     }
 
+});
+
+document.addEventListener('click', (event) => {
+    if(event.target.tagName === 'BUTTON'){
+        let tecla = event.target;
+        let teclaASCII = tecla.id;
+        let letra = tecla.textContent;
+
+        if(!letrasPresionadas.includes(letra.toLowerCase()) && !juegoTerminado){
+            letrasPresionadas.push(letra.toLowerCase());
+            deshabilitarTeclado(parseInt(teclaASCII));
+
+            if(palabraOculta.includes(letra.toLowerCase())){
+                acerto.innerHTML = parseInt(acerto.innerHTML) + 1;
+                palabraOculta = palabraOculta.filter(l => l !== letra.toLowerCase());
+                let posiciones = encontrarPosicionLetra(letra.toLowerCase());
+                for(let i = 0; i < posiciones.length; i++){
+                    palabra.innerHTML = palabra.innerHTML.replace(`<span id="letra-${posiciones[i]}">_ </span>`, `<span id="letra-${posiciones[i]}">${letra.toLowerCase()} </span>`);
+                }
+
+                if(palabraOculta.length === 0){
+                    juegoGanado = true;
+                    alert('¡Has ganado! La palabra era: ' + palabraAleatoria);
+                    juegoTerminado = true;
+                }
+            }else{
+                error.innerHTML = parseInt(error.innerHTML) + 1;
+                dibujarParteMuneco(parseInt(error.innerHTML));
+                if(parseInt(error.innerHTML) >= 6){
+                    alert('¡Has perdido! La palabra era: ' + palabraAleatoria);
+                    juegoTerminado = true;
+                }
+            }
+        }
+    }
 });
 
 
@@ -155,4 +216,22 @@ function dibujarParteMuneco(numError){
 btnReiniciar.addEventListener('click', () => {
     location.reload();
 });
+
+
+function recibirTeclaASCII(event){
+    let tecla = event.key;
+    tecla = tecla.toUpperCase();
+    let teclaASCII = tecla.charCodeAt(0);
+    return teclaASCII;
+}
+
+
+function deshabilitarTeclado(teclaASCII){
+    botonesTeclado.forEach(boton => {
+        if(parseInt(boton.id) === teclaASCII){
+            boton.disabled = true;
+            boton.style.backgroundColor = 'gray';
+        }
+    }); 
+}
 
